@@ -59,16 +59,21 @@ def main():
                 
             if kk_rct.colliderect(bd_rct):
                 #pg.draw.rect(screen, (0,0,0), (0, 0, 1600, 900))
-                bk = pg.Surface((1600, 900))
+                #爆弾に当たった際に出る画面の設定
+                bk = pg.Surface((1600, 900)) 
                 pg.draw.rect(bk, (0,0,0), (0, 0, 1600, 900))
                 bk.set_alpha(127)
                 screen.blit(bk, [0, 0])
                 print("Game Over")
+                #文字の設定
+
                 fonto = pg.font.Font(None, 80)
                 txt = fonto.render("Game Over",
                                True, (255, 255, 255))
                 screen.blit(txt, [800, 400]) 
                 pg.display.update()
+                
+                #時間の設定
                 time.sleep(5)
                 return
             #draw.rect(1600, 900)
