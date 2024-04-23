@@ -2,11 +2,12 @@ import os
 import sys
 import pygame as pg
 import random 
+import time 
 
 WIDTH, HEIGHT = 1600, 900
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 DELTA = {
-    pg.K_UP: (0, -5),
+    pg.K_UP: (0, -5), 
     pg.K_DOWN:(0, +5),
     pg.K_LEFT: (-5, 0),
     pg.K_RIGHT: (+5, 0),
@@ -36,6 +37,7 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
+    #sscreen.blit(kk_img, )
     #ここから爆弾の設定
     bd_img = pg.Surface((20, 20))
     bd_img.set_colorkey((0, 0, 0))
@@ -51,12 +53,27 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
-                return
+        
+            
+#こうかとんが爆弾にぶつかったら
+                
             if kk_rct.colliderect(bd_rct):
+                #pg.draw.rect(screen, (0,0,0), (0, 0, 1600, 900))
+                bk = pg.Surface((1600, 900))
+                pg.draw.rect(bk, (0,0,0), (0, 0, 1600, 900))
+                bk.set_alpha(127)
+                screen.blit(bk, [0, 0])
                 print("Game Over")
+                fonto = pg.font.Font(None, 80)
+                txt = fonto.render("Game Over",
+                               True, (255, 255, 255))
+                screen.blit(txt, [800, 400]) 
+                pg.display.update()
+                time.sleep(5)
                 return
-        screen.blit(bg_img, [0, 0]) 
-
+            #draw.rect(1600, 900)
+            #Surface.set_alpha(draw.rect)
+        screen.blit(bg_img, [0, 0])
         # こうかとんの移動と表示
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]
@@ -86,8 +103,8 @@ def main():
         if not tate:  # 縦方向にはみ出てたら
             vy *= -1
         pg.display.update()
-        
-        pg.display.update()
+
+        #pg.display.update()
         tmr += 1
         clock.tick(50)
 
